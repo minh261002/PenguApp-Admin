@@ -38,7 +38,6 @@ const LoginPage = () => {
       }
     } catch (error) {
       setLoading(false)
-      showToast('Đã xảy ra lỗi, vui lòng thử lại sau', 'error')
       console.error('Error logging in:', error)
     } finally {
       setLoading(false)

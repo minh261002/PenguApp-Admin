@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import useAuthStore from '@/store/authStore'
 
-export const baseURL = import.meta.env.VITE_API_URL as string
+export const baseURL = 'http://localhost:3000/api'
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean
@@ -61,7 +61,6 @@ axios.interceptors.response.use(
         }
       } catch (refreshError) {
         console.error('Token refresh failed:', refreshError)
-        window.location.href = '/login'
         return Promise.reject(refreshError)
       }
     }

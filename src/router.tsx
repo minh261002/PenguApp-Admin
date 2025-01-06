@@ -3,16 +3,16 @@ import { createBrowserRouter } from 'react-router-dom'
 import { LoginPage, Dashboard, UserPage } from '@/pages'
 import Layout from '@/layouts/Layout'
 import GuardLayout from '@/layouts/GuardLayout'
-// import Auththentication from '@/middlewares/Authentication'
-// import NoAuthentication from '@/middlewares/NoAuthentication'
+import Auththentication from '@/middlewares/Authentication'
+import NoAuthentication from '@/middlewares/NoAuthentication'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      // <Auththentication>
-      <Layout />
-      // </Auththentication>
+      <Auththentication>
+        <Layout />
+      </Auththentication>
     ),
     children: [
       {
@@ -29,11 +29,11 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      // <NoAuthentication>
-      <GuardLayout />
-      // </NoAuthentication>
+      <NoAuthentication>
+        <GuardLayout />
+      </NoAuthentication>
     ),
-    children: [{ path: '/login', element: <LoginPage /> }]
+    children: [{ path: '/dang-nhap', element: <LoginPage /> }]
   }
 ])
 
