@@ -1,6 +1,6 @@
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { BellIcon, FullscreenIcon, LockIcon, LogOutIcon, SearchIcon, UserIcon } from 'lucide-react'
+import { BellIcon, FullscreenIcon, LockIcon, LogOutIcon, MenuIcon, SearchIcon, UserIcon } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,14 +31,24 @@ const Navbar = () => {
 
   return (
     <header className='shadow dark:shadow-2xl border-b-2'>
-      <div className='h-[64px] w-full grid grid-cols-1 md:grid-cols-3 items-center justify-between px-10'>
-        <div className='col-span-1 relative hidden md:block'>
-          <Input className='md:block w-full' placeholder='Tìm kiếm nội dung' />
-          <Button className='absolute top-1/2 right-0 transform -translate-y-1/2' size={'icon'}>
-            <SearchIcon size={24} />
-          </Button>
+      <div className='h-[64px] w-full grid grid-cols-2 md:grid-cols-3 items-center justify-between px-10'>
+        <div className='col-span-1'>
+          <div className='relative hidden md:block'>
+            <Input className='md:block w-full' placeholder='Tìm kiếm nội dung' />
+            <Button className='absolute top-1/2 right-0 transform -translate-y-1/2' size={'icon'}>
+              <SearchIcon size={24} />
+            </Button>
+          </div>
+
+          <div className='block md:hidden'>
+            <div className='cursor-pointer'>
+              <MenuIcon />
+            </div>
+          </div>
         </div>
-        <div className='col-span-1'></div>
+
+        <div className='col-span-1 hidden md:block'></div>
+
         <div className='col-span-1 flex items-center justify-end gap-6'>
           <DropdownMenu>
             <DropdownMenuTrigger className='focus:outline-none'>
@@ -49,7 +59,7 @@ const Navbar = () => {
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>
 
-                  <div className='flex flex-col items-start'>
+                  <div className='hidden md:flex flex-col items-start'>
                     <span className='text-md font-medium'>{user.name}</span>
                     <span className='block text-xs text-muted-foreground'>Administrator</span>
                   </div>
