@@ -11,8 +11,11 @@ import { showToast } from '@/helpers/toastHelper'
 import { loginHandle } from '@/services/AuthService'
 import { HttpStatus } from '@/constants/httpStatus'
 import useAuthStore from '@/store/authStore'
+import useDocumentTitle from '@/hooks/useDocumentTItle'
 
 const LoginPage = () => {
+  useDocumentTitle('Đăng nhập')
+
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
   const { login } = useAuthStore()
@@ -94,7 +97,7 @@ const LoginPage = () => {
                   {showPassword ? <EyeClosedIcon size={20} /> : <EyeIcon size={20} />}
                 </button>
               </div>
-              {errors.email && <p className='text-red-500 text-xs mt-1'>{errors.email.message}</p>}
+              {errors.password && <p className='text-red-500 text-xs mt-1'>{errors.password.message}</p>}
             </div>
 
             <div className='form-group mb-5'>
