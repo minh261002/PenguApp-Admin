@@ -20,7 +20,7 @@ const Sidebar = () => {
         <Accordion type='single' collapsible defaultValue={path || 'Dashboard'}>
           <AccordionItem
             value='Dashboard'
-            className={`px-4 dashboard ${path === '' ? 'bg-sky-400 text-xl text-white font-semibold' : ''}`}
+            className={`px-4 dashboard ${path === '' ? 'text-blue-500  font-semibold' : ''}`}
           >
             <AccordionTrigger className='flex items-center justify-between gap-2 hover:no-underline'>
               <Link to={'/'} className='flex items-center justify-start gap-2 '>
@@ -34,7 +34,7 @@ const Sidebar = () => {
             <AccordionItem
               key={index}
               value={item.title}
-              className={`px-4 ${path === item.href.split('/')[1] ? 'bg-sky-400 text-xl text-white font-semibold' : ''}`}
+              className={`px-4 ${path === item.href.split('/')[1] ? 'font-semibold' : ''}`}
             >
               <AccordionTrigger className='flex items-center justify-between gap-2 hover:no-underline'>
                 <div className='flex items-center justify-start gap-2'>
@@ -50,7 +50,7 @@ const Sidebar = () => {
                       <div
                         key={index}
                         className={`flex items-center justify-between gap-2 py-3 rounded-md ${
-                          location.pathname === child.href ? 'pl-4 bg-sky-300 text-white' : ''
+                          location.pathname === child.href ? 'pl-4  text-blue-500 ' : ''
                         }`}
                       >
                         <Link to={child.href} className='flex items-center justify-start gap-2'>
