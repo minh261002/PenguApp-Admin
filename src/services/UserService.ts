@@ -1,0 +1,45 @@
+import axiosInstance from "../configs/axios";
+import { handleAxiosError } from "@/helpers/axiosHelper";
+import type { User } from "@/types/User";
+import { showToast } from "@/helpers/toastHelper";
+import type { Response } from "@/types/Default";
+
+const getAllUsers = async (): Promise<User[]> => {
+  try {
+    const response = await axiosInstance.get("/user");
+    return response.data.data;
+  } catch (error) {
+    throw handleAxiosError(error, showToast);
+  }
+}
+
+const updateStatusUser= async (
+  id: number,
+  status: string
+): Promise<Response | null> => {
+  try {
+    const response = await axiosInstance.patch(`/user/${id}/status`, {
+      status,
+    });
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error,showToast);
+    return null;
+  }
+};
+
+const deleteUser = async (id: number): Promise<Response | null> => {
+  try {
+    const response = await axiosInstance.delete(`/user/${id}`);
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, showToast);
+    return null;
+  }
+}
+
+export {
+  getAllUsers,
+  updateStatusUser,
+  deleteUser
+}
