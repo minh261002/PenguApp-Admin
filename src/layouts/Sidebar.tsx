@@ -17,7 +17,7 @@ const Sidebar = () => {
       </div>
 
       <div className='flex flex-col'>
-        <Accordion type='single' collapsible defaultValue={path || 'Dashboard'}>
+        <Accordion type='single' collapsible defaultValue={path}>
           <AccordionItem
             value='Dashboard'
             className={`px-4 dashboard ${path === '' ? 'text-blue-500  font-semibold' : ''}`}
@@ -33,7 +33,7 @@ const Sidebar = () => {
           {sidebarItems.map((item, index) => (
             <AccordionItem
               key={index}
-              value={item.title}
+              value={item.href.split('/')[1]}
               className={`px-4 ${path === item.href.split('/')[1] ? 'font-semibold' : ''}`}
             >
               <AccordionTrigger className='flex items-center justify-between gap-2 hover:no-underline'>
