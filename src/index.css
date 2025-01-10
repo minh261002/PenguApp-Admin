@@ -123,3 +123,7 @@
 .dashboard-icon {
   display: block !important;
 }
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
