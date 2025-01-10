@@ -34,11 +34,12 @@ const createUser = async (data: User): Promise<Response | null> => {
 }
 
 const updateStatusUser= async (
-  id: number,
+  _id: string,
   status: string
 ): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.patch(`/user/${id}/status`, {
+    console.log(_id, status);
+    const response = await axiosInstance.patch(`/user/${_id}/status`, {
       status,
     });
     return response.data;

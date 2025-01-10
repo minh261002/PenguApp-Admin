@@ -36,7 +36,7 @@ export const userColumns: ColumnDef<User | null>[] = [
       const value = getValue()
       const userId = row.original?._id
 
-      const handleUpdateStatus = async (_id: number, status: string) => {
+      const handleUpdateStatus = async (_id: string, status: string) => {
         setIsLoading(true)
         try {
           await updateStatusUser(_id, status)
@@ -53,7 +53,9 @@ export const userColumns: ColumnDef<User | null>[] = [
         <Switch
           checked={value === UserStatus.ACTIVE}
           onCheckedChange={async (checked) => {
-            handleUpdateStatus(Number(userId), checked ? UserStatus.ACTIVE : UserStatus.INACTIVE)
+            if (userId) {
+              handleUpdateStatus(userId, checked ? UserStatus.ACTIVE : UserStatus.INACTIVE)
+            }
           }}
           disabled={isLoading}
         />
