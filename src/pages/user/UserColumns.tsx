@@ -51,7 +51,7 @@ export const userColumns: ColumnDef<User | null>[] = [
 
       return (
         <Switch
-          checked={value === 2}
+          checked={value === UserStatus.ACTIVE}
           onCheckedChange={async (checked) => {
             handleUpdateStatus(Number(userId), checked ? UserStatus.ACTIVE : UserStatus.INACTIVE)
           }}
@@ -66,7 +66,7 @@ export const userColumns: ColumnDef<User | null>[] = [
     cell: ({ getValue }) => {
       const value = getValue()
       return value === UserRole.ADMIN ? (
-        <Badge className='bg-red-500 rounded-md'>Administrator</Badge>
+        <Badge className='bg-sky-500 rounded-md'>Quản trị viên</Badge>
       ) : (
         <Badge className='bg-green-500'>Khách hàng</Badge>
       )

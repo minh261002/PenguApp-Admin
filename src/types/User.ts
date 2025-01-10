@@ -2,7 +2,7 @@ export interface User{
   _id: number;
   name: string;
   email: string;
-  password: string;
+  phone: string;
   province_id: string;
   district_id: string;
   ward_id: string;
@@ -11,5 +11,7 @@ export interface User{
   reward_point: number;
   role: string;
   status: string;
+  birthday: Date;
+  password: string | null;
 }
 

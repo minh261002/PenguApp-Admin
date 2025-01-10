@@ -21,10 +21,6 @@ const UserPage = () => {
     queryFn: getAllUsers
   })
 
-  if (isLoading) {
-    return <Loader />
-  }
-
   if (error) {
     return <>Error</>
   }
@@ -41,7 +37,7 @@ const UserPage = () => {
         </CardHeader>
 
         <CardContent>
-          <DataTable key={JSON.stringify(users)} columns={userColumns} data={safeUsers} />
+          {isLoading ? <Loader /> : error ? <div>Error</div> : <DataTable columns={userColumns} data={safeUsers} />}
         </CardContent>
       </Card>
     </>

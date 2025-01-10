@@ -6,6 +6,7 @@ import Auththentication from '@/middlewares/Authentication'
 import NoAuthentication from '@/middlewares/NoAuthentication'
 import { NotFoundError, UnauthorisedError } from './pages/errors'
 import { Dashboard, LoginPage, UserPage } from './pages'
+import CreateUser from './pages/user/CreateUser'
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,14 @@ const router = createBrowserRouter([
         path: '/',
         element: <Dashboard />
       },
+      //User route
       {
         path: '/user',
         element: <UserPage />
+      },
+      {
+        path: '/user/create',
+        element: <CreateUser />
       }
     ]
   },

@@ -13,6 +13,26 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 }
 
+const getUserById = async (id: number): Promise<User | null> => {
+  try {
+    const response = await axiosInstance.get(`/user/${id}`);
+    return response.data.data;
+  } catch (error) {
+    handleAxiosError(error, showToast);
+    return null;
+  }
+}
+
+const createUser = async (data: User): Promise<Response | null> => {
+  try {
+    const response = await axiosInstance.post("/user", data);
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, showToast);
+    return null;
+  }
+}
+
 const updateStatusUser= async (
   id: number,
   status: string
@@ -41,5 +61,7 @@ const deleteUser = async (id: number): Promise<Response | null> => {
 export {
   getAllUsers,
   updateStatusUser,
-  deleteUser
+  deleteUser,
+  getUserById,
+  createUser,
 }

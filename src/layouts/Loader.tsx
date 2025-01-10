@@ -1,6 +1,6 @@
 const Loader = () => {
   return (
-    <div className='w-full h-1/2 flex items-center justify-center'>
+    <div className='w-full h-full flex items-center justify-center'>
       <div className='relative w-[44.8px] h-[44.8px] text-primary'>
         <div
           className='absolute inset-0 rounded-full'
