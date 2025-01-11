@@ -18,7 +18,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const { login } = useAuthStore()
+  const { login, setUserData } = useAuthStore()
   const navigate = useNavigate()
 
   const {
@@ -35,6 +35,7 @@ const LoginPage = () => {
       if (response.status === HttpStatus.OK) {
         showToast(response.message, 'success')
         login({ accessToken: response.tokens.accessToken, refreshToken: response.tokens.refreshToken })
+        setUserData(response.userData)
         navigate('/')
       } else {
         showToast(response.message, 'error')

@@ -4,6 +4,12 @@ export interface LoginResponse {
   tokens: {
     accessToken: string
     refreshToken: string
+  },
+  userData: {
+    id: string
+    name: string
+    avatar: string | null
+    role: string
   }
 }
 
