@@ -23,19 +23,19 @@ type response = {
 }
 
 type DeleteButtonProps = {
-  action: (id: number) => Promise<response | null>
-  id: number
+  action: (_id: string) => Promise<response | null>
+  _id: string
   queryKey: string[]
 }
 
-const DeleteButton = ({ action, id, queryKey }: DeleteButtonProps) => {
+const DeleteButton = ({ action, _id, queryKey }: DeleteButtonProps) => {
   const [loading, setLoading] = useState<boolean>(false)
 
   const queryClient = useQueryClient()
 
-  const handleDelete = async (id: number) => {
+  const handleDelete = async (_id: string) => {
     setLoading(true)
-    const response = await action(id)
+    const response = await action(_id)
 
     if (response) {
       if (response.status === HttpStatus.OK) {
@@ -67,7 +67,7 @@ const DeleteButton = ({ action, id, queryKey }: DeleteButtonProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Huỷ</AlertDialogCancel>
-          <AlertDialogAction onClick={() => handleDelete(id)}>{loading ? <Loader /> : 'Xác nhận'}</AlertDialogAction>
+          <AlertDialogAction onClick={() => handleDelete(_id)}>{loading ? <Loader /> : 'Xác nhận'}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

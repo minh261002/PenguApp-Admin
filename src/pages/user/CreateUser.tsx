@@ -15,6 +15,7 @@ import LoadingPage from '@/layouts/LoadingPage'
 import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
 import { useNavigate } from 'react-router-dom'
+import FileCustom from '@/components/custom/FileCustom'
 
 const CreateUser = () => {
   useDocumentTitle('Thêm tài khoản mới')
@@ -26,6 +27,7 @@ const CreateUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [avatar, setAvatar] = useState<File[]>([])
 
   const nav = useNavigate()
 
@@ -58,6 +60,10 @@ const CreateUser = () => {
   const handleCreateUser = async (data: User) => {
     if (selectedDate) {
       data.birthday = selectedDate
+    }
+
+    if (avatar.length > 0) {
+      data.file = avatar[0]
     }
 
     try {
@@ -176,6 +182,16 @@ const CreateUser = () => {
 
       <div className='col-span-1'>
         <ReturnGroup link='/user' type='create' />
+
+        <Card className='mt-5'>
+          <CardHeader className='flex-row items-center justify-between border-b mb-5'>
+            <CardTitle className='font-medium'>Ảnh đại diện</CardTitle>
+          </CardHeader>
+
+          <CardContent className=''>
+            <FileCustom files={avatar} setFiles={setAvatar} multiple={true} />
+          </CardContent>
+        </Card>
       </div>
     </form>
   )

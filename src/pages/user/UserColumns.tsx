@@ -18,7 +18,7 @@ export const userColumns: ColumnDef<User | null>[] = [
   {
     accessorKey: 'avatar',
     header: 'Ảnh',
-    cell: ({ row }) => <img src={row.original?.avatar} alt='image' className='w-16 h-16 object-cover' />
+    cell: ({ row }) => <img src={row.original?.avatar ?? ''} alt='image' className='w-16 h-16 object-cover' />
   },
   {
     accessorKey: 'name',
@@ -91,7 +91,7 @@ export const userColumns: ColumnDef<User | null>[] = [
             </Link>
           </Button>
 
-          <DeleteButton action={deleteUser} id={Number(userId)} queryKey={['users']} />
+          <DeleteButton action={deleteUser} _id={String(userId)} queryKey={['users']} />
         </div>
       )
     }

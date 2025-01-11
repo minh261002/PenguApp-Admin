@@ -13,9 +13,9 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 }
 
-const getUserById = async (id: number): Promise<User | null> => {
+const getUserById = async (_id: number): Promise<User | null> => {
   try {
-    const response = await axiosInstance.get(`/user/${id}`);
+    const response = await axiosInstance.get(`/user/${_id}`);
     return response.data.data;
   } catch (error) {
     handleAxiosError(error, showToast);
@@ -49,9 +49,9 @@ const updateStatusUser= async (
   }
 };
 
-const deleteUser = async (id: number): Promise<Response | null> => {
+const deleteUser = async (_id: string): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.delete(`/user/${id}`);
+    const response = await axiosInstance.delete(`/user/${_id}`);
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);

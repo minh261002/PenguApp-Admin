@@ -7,7 +7,8 @@ export interface User{
   district_id: string;
   ward_id: string;
   address: string;
-  avatar: string;
+  file: File | null;
+  avatar: string | null;
   reward_point: number;
   role: string;
   status: string;
