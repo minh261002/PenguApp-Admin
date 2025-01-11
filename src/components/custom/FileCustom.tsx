@@ -7,27 +7,36 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 interface FileCustomProps {
   files: File[]
-  url?: string
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
   multiple?: boolean
+  url?: string
 }
 
 const FileCustom = ({ files, setFiles, multiple = false, url }: FileCustomProps) => {
+  const filePreview = url
+    ? [
+        {
+          source: url,
+          options: {
+            type: 'remote'
+          }
+        } as any
+      ]
+    : []
+
   return (
-    <div>
-      <FilePond
-        files={files}
-        onupdatefiles={(fileItems) => {
-          const newFiles = fileItems.map((fileItem) => fileItem.file as File)
-          setFiles(newFiles as File[])
-        }}
-        allowMultiple={multiple}
-        maxFiles={multiple ? 5 : 1}
-        labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
-        allowImagePreview
-        allowImageExifOrientation
-      />
-    </div>
+    <FilePond
+      files={files.length > 0 ? files : filePreview}
+      onupdatefiles={(fileItems) => {
+        const newFiles = fileItems.map((fileItem) => fileItem.file as File)
+        setFiles(newFiles)
+      }}
+      allowImagePreview
+      allowImageExifOrientation
+      allowMultiple={multiple}
+      maxFiles={multiple ? 5 : 1}
+      labelIdle="Drag & Drop your files or <span class='filepond--label-action'>Browse</span>"
+    />
   )
 }
 
