@@ -7,11 +7,12 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 interface FileCustomProps {
   files: File[]
+  url?: string
   setFiles: React.Dispatch<React.SetStateAction<File[]>>
   multiple?: boolean
 }
 
-const FileCustom = ({ files, setFiles, multiple = false }: FileCustomProps) => {
+const FileCustom = ({ files, setFiles, multiple = false, url }: FileCustomProps) => {
   return (
     <div>
       <FilePond

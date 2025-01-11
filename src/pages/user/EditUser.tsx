@@ -10,15 +10,17 @@ import { getDistricts, getProvinces, getWards } from '@/services/LocationService
 import type { Location } from '@/types/Location'
 import ReturnGroup from '@/components/custom/ReturnGroup'
 import { EyeIcon, EyeClosedIcon } from 'lucide-react'
-import { createUser } from '@/services/UserService'
+import { createUser, getUserById } from '@/services/UserService'
 import LoadingPage from '@/layouts/LoadingPage'
 import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
 import { useNavigate } from 'react-router-dom'
 import FileCustom from '@/components/custom/FileCustom'
+import { useParams } from 'react-router-dom'
 
-const CreateUser = () => {
-  useDocumentTitle('Thêm tài khoản mới')
+const EditUser = () => {
+  useDocumentTitle('Chỉnh sửa thông tin')
+  const { id } = useParams()
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [provinces, setProvinces] = useState<Location[]>([])
@@ -28,12 +30,14 @@ const CreateUser = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [avatar, setAvatar] = useState<File[]>([])
+  const [imageUrl, setImageUrl] = useState<string | null>(null)
 
   const nav = useNavigate()
 
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors }
   } = useForm<User>()
@@ -53,15 +57,39 @@ const CreateUser = () => {
     setWards(response || [])
   }
 
+  const fetchUserData = async () => {
+    const response = await getUserById(String(id))
+    if (response && Number(response.status) === HttpStatus.OK) {
+      if (response.data) {
+        setValue('name', response.data.name)
+        setValue('email', response.data.email)
+        setValue('phone', response.data.phone)
+        // setValue('province_id', response.data.province_id)
+        // setValue('district_id', response.data.district_id)
+        // setValue('ward_id', response.data.ward_id)
+        setValue('address', response.data.address)
+        setValue('role', response.data.role)
+        setValue('status', response.data.status)
+        setValue('reward_point', response.data.reward_point)
+        setSelectedDate(response.data.birthday)
+        setImageUrl(response.data.avatar)
+      }
+    }
+  }
+
   useEffect(() => {
     fetchProvinces()
+    fetchUserData()
   }, [])
 
   const handleCreateUser = async (data: User) => {
     if (selectedDate) {
       data.birthday = selectedDate
     }
-    data.file = avatar[0]
+
+    if (avatar.length > 0) {
+      data.file = avatar[0]
+    }
 
     try {
       setLoading(true)
@@ -186,7 +214,7 @@ const CreateUser = () => {
           </CardHeader>
 
           <CardContent className=''>
-            <FileCustom files={avatar} setFiles={setAvatar} multiple={true} />
+            <FileCustom files={avatar} setFiles={setAvatar} multiple={true} url={imageUrl ?? ''} />
           </CardContent>
         </Card>
       </div>
@@ -194,4 +222,4 @@ const CreateUser = () => {
   )
 }
 
-export default CreateUser
+export default EditUser

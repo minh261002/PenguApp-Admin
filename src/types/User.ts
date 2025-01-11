@@ -16,3 +16,9 @@ export interface User{
   password: string | null;
 }
 
+
+export interface UserResponse {
+  data: User;
+  status: number;
+  message: string;
+}

@@ -1,6 +1,6 @@
 import axiosInstance from "../configs/axios";
 import { handleAxiosError } from "@/helpers/axiosHelper";
-import type { User } from "@/types/User";
+import type { User, UserResponse } from "@/types/User";
 import { showToast } from "@/helpers/toastHelper";
 import type { Response } from "@/types/Default";
 
@@ -13,10 +13,10 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 }
 
-const getUserById = async (_id: number): Promise<User | null> => {
+const getUserById = async (_id: string): Promise<UserResponse | null> => {
   try {
     const response = await axiosInstance.get(`/user/${_id}`);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
     return null;
@@ -25,7 +25,11 @@ const getUserById = async (_id: number): Promise<User | null> => {
 
 const createUser = async (data: User): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.post("/user", data);
+    const response = await axiosInstance.post("/user", data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
