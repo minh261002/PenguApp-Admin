@@ -1,6 +1,23 @@
-import { AlbumIcon, GripIcon, ListIcon, PlusIcon, UserIcon } from 'lucide-react'
+import { AlbumIcon, BlocksIcon, GripIcon, ListIcon, PlusIcon, UserIcon } from 'lucide-react'
 
 export const sidebarItems = [
+  {
+    title: 'Danh mục',
+    icon: <BlocksIcon size={24} />,
+    href: '/category',
+    children: [
+      {
+        title: 'Thêm mới',
+        icon: <PlusIcon size={24} />,
+        href: '/category/create'
+      },
+      {
+        title: 'Danh sách',
+        icon: <ListIcon size={24} />,
+        href: '/category'
+      }
+    ]
+  },
   {
     title: 'Chuyên mục',
     icon: <GripIcon size={24} />,

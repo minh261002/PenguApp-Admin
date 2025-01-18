@@ -6,6 +6,9 @@ import EditUser from '@/pages/user/EditUser'
 import PostCataloguePage from '@/pages/post-catalogue/PostCataloguePage'
 import CreatePostCatalogue from '@/pages/post-catalogue/CreatePostCatalogue'
 import EditPostCatalogue from '@/pages/post-catalogue/EditPostCatalogue'
+import CategoryPage from '@/pages/category/CategoryPage';
+import CreateCategory from '@/pages/category/CreateCategory';
+import EditCategory from '@/pages/category/EditCategory';
 
 export {
   LoginPage,
@@ -15,5 +18,8 @@ export {
   EditUser,
   PostCataloguePage,
   CreatePostCatalogue,
-  EditPostCatalogue
+  EditPostCatalogue,
+  CategoryPage,
+  CreateCategory,
+  EditCategory
 }
