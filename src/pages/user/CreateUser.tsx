@@ -2,7 +2,7 @@ import useDocumentTitle from '@/hooks/useDocumentTItle'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import type { User } from '@/types/User'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import DatePickerCustom from '@/components/custom/DatePickerCustom'
 import { useEffect, useState } from 'react'
 import SelectLocation from '@/components/custom/SelectLocation'
@@ -16,6 +16,8 @@ import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
 import { useNavigate } from 'react-router-dom'
 import ImageCustom from '@/components/custom/ImageCustom'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { UserRole } from '@/constants/enum'
 
 const CreateUser = () => {
   useDocumentTitle('Thêm tài khoản mới')
@@ -178,6 +180,33 @@ const CreateUser = () => {
 
       <div className='col-span-1'>
         <ReturnGroup link='/user' type='create' />
+
+        <Card className='mt-5'>
+          <CardHeader className='flex-row items-center justify-between border-b mb-5'>
+            <CardTitle className='font-medium'>Vai trò</CardTitle>
+          </CardHeader>
+
+          <CardContent>
+            <Controller
+              name='role'
+              control={control}
+              defaultValue=''
+              rules={{ required: 'Vui lòng chọn vai trò' }}
+              render={({ field }) => (
+                <Select onValueChange={(value) => field.onChange(value)} value={field.value}>
+                  <SelectTrigger>
+                    <SelectValue placeholder='Chọn vai trò' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value={UserRole.ADMIN}>Quản trị viên</SelectItem>
+                    <SelectItem value={UserRole.USER}>Người dùng</SelectItem>
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            {errors.status && <span className='text-red-500 text-sm'>{errors.status.message}</span>}
+          </CardContent>
+        </Card>
 
         <Card className='mt-5'>
           <CardHeader className='flex-row items-center justify-between border-b mb-5'>

@@ -28,8 +28,7 @@ const EditUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [file, setFile] = useState<File | undefined>(undefined)
-  const [imageUrl, setImageUrl] = useState<string | null>(null)
+  const [createFile, setCreateFile] = useState<string | null>(null)
 
   const {
     register,
@@ -80,7 +79,7 @@ const EditUser = () => {
 
         setValue('reward_point', response.data.reward_point)
         setSelectedDate(response.data.birthday)
-        setImageUrl(response.data.avatar)
+        setCreateFile(response.data.avatar)
       }
     }
   }
@@ -95,9 +94,7 @@ const EditUser = () => {
       data.birthday = selectedDate
     }
 
-    if (file) {
-      data.file = file
-    }
+    data.avatar = createFile as string
 
     try {
       setLoading(true)
@@ -213,7 +210,7 @@ const EditUser = () => {
       </div>
 
       <div className='col-span-1'>
-        <ReturnGroup link='/user' type='create' />
+        <ReturnGroup link='/user' type='edit' />
 
         <Card className='mt-5'>
           <CardHeader className='flex-row items-center justify-between border-b mb-5'>
@@ -222,10 +219,10 @@ const EditUser = () => {
 
           <CardContent className=''>
             <ImageCustom
-              image={imageUrl}
-              setCreateFile={(file) => {
-                setFile(file)
+              setCreateFile={(url: string) => {
+                setCreateFile(url as string)
               }}
+              image={createFile as string}
             />
           </CardContent>
         </Card>

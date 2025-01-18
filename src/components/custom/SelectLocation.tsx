@@ -33,15 +33,14 @@ const SelectLocation = ({
           defaultValue=''
           render={({ field }) => (
             <Select
-              options={provinces.map((province: any) => ({
-                value: province.code,
-                label: province.name_with_type
-              }))}
+              options={provinces}
+              getOptionLabel={(province) => province.name_with_type}
+              getOptionValue={(province) => province.code}
+              value={provinces.find((province: any) => province.code === field.value) || null}
               placeholder='Chọn Tỉnh/Thành phố'
-              onChange={(newValue) => {
-                const value = newValue as { value: string } | null
-                field.onChange(value?.value || '')
-                handleOnChangeProvince(value?.value || '')
+              onChange={(value) => {
+                field.onChange(value?.code)
+                handleOnChangeProvince(value?.code)
               }}
             />
           )}
@@ -56,14 +55,14 @@ const SelectLocation = ({
           defaultValue=''
           render={({ field }) => (
             <Select
-              options={districts.map((district: any) => ({
-                value: district.code,
-                label: district.name_with_type
-              }))}
+              options={districts}
+              getOptionLabel={(district) => district.name_with_type}
+              getOptionValue={(district) => district.code}
+              value={districts.find((district: any) => district.code === field.value) || null}
               placeholder='Chọn Quận/Huyện'
-              onChange={(newValue: { value: string } | null) => {
-                field.onChange(newValue?.value || '')
-                handleOnChangeDistrict(newValue?.value || '')
+              onChange={(value) => {
+                field.onChange(value?.code)
+                handleOnChangeDistrict(value?.code)
               }}
             />
           )}
@@ -77,16 +76,12 @@ const SelectLocation = ({
           control={control}
           render={({ field }) => (
             <Select
-              className=''
-              options={wards.map((ward: any) => ({
-                value: ward.code,
-                label: ward.name_with_type
-              }))}
+              options={wards}
+              getOptionLabel={(ward) => ward.name_with_type}
+              getOptionValue={(ward) => ward.code}
+              value={wards.find((ward: any) => ward.code === field.value) || null}
               placeholder='Chọn Phường/Xã'
-              onChange={(newValue) => {
-                const value = newValue as { value: string } | null
-                field.onChange(value?.value || '')
-              }}
+              onChange={(value) => field.onChange(value?.code)}
             />
           )}
         />

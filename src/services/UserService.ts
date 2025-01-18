@@ -25,11 +25,7 @@ const getUserById = async (_id: string): Promise<UserResponse | null> => {
 
 const createUser = async (data: User): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.post("/user", data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axiosInstance.post("/user", data);
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
@@ -42,11 +38,7 @@ const updateUser = async (
   data: User
 ): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.put(`/user/${_id}`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axiosInstance.put(`/user/${_id}`, data);
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);

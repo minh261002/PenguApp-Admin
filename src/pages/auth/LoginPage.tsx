@@ -31,6 +31,10 @@ const LoginPage = () => {
     try {
       setLoading(true)
       const response = await loginHandle(payload)
+      if (response.userData.role !== 'admin') {
+        showToast('Bạn không có quyền truy cập nội dung này', 'error')
+        return
+      }
 
       if (response.status === HttpStatus.OK) {
         showToast(response.message, 'success')
