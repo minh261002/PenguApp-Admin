@@ -25,7 +25,7 @@ const Layout = () => {
         <div className='flex flex-col flex-auto min-h-screen min-w-0 relative w-full'>
           <Navbar />
 
-          <div className='h-full flex flex-auto flex-col bg-[#f5f5f5]'>
+          <div className='h-full flex flex-auto flex-col bg-[#f5f5f5] overflow-scroll'>
             <div className='h-full flex flex-auto flex-col justify-between'>
               <main className='h-full'>
                 <div className='relative h-full flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8 mx-auto'>

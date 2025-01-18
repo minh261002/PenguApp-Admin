@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
+import { useState, useEffect, useRef } from 'react'
+import { CKEditor } from '@ckeditor/ckeditor5-react'
 
 import {
   ClassicEditor,
@@ -70,90 +70,88 @@ import {
   TextTransformation,
   TodoList,
   Underline,
-  Undo,
-} from "ckeditor5";
+  Undo
+} from 'ckeditor5'
 
-import "ckeditor5/ckeditor5.css";
+import 'ckeditor5/ckeditor5.css'
 
 type Props = {
-  setValue: (value: string) => void;
-  data?: string;
-};
+  setValue: (value: string) => void
+  data?: string
+}
 
 const TextareaCustom = ({ setValue, data }: Props) => {
-  const CKBOX_TOKEN_URL = import.meta.env.VITE_CKBOX_LICENSE_KEY;
+  const CKBOX_TOKEN_URL = import.meta.env.VITE_CKBOX_LICENSE_KEY
 
-  const editorContainerRef = useRef(null);
-  const editorRef = useRef(null);
-  const [isLayoutReady, setIsLayoutReady] = useState(false);
+  const editorContainerRef = useRef(null)
+  const editorRef = useRef(null)
+  const [isLayoutReady, setIsLayoutReady] = useState(false)
 
   useEffect(() => {
-    setIsLayoutReady(true);
+    setIsLayoutReady(true)
 
-    return () => setIsLayoutReady(false);
-  }, []);
+    return () => setIsLayoutReady(false)
+  }, [])
 
   return (
     <div>
-      <div className="main-container">
-        <div
-          className="editor-container editor-container_classic-editor"
-          ref={editorContainerRef}
-        >
-          <div className="editor-container__editor">
+      <div className='main-container'>
+        <div className='editor-container editor-container_classic-editor' ref={editorContainerRef}>
+          <div className='editor-container__editor'>
             <div ref={editorRef}>
               {isLayoutReady && (
                 <CKEditor
                   onChange={(_, editor) => {
-                    const data = editor.getData();
-                    setValue(data);
+                    const data = editor.getData()
+                    setValue(data)
                   }}
-                  data={data || ""}
+                  data={data || ''}
                   editor={ClassicEditor}
                   config={{
+                    licenseKey: import.meta.env.VITE_CKEDITOR_LICENSE_KEY,
                     toolbar: {
                       items: [
-                        "undo",
-                        "redo",
-                        "|",
-                        "sourceEditing",
-                        "showBlocks",
-                        "textPartLanguage",
-                        "|",
-                        "heading",
-                        "|",
-                        "fontSize",
-                        "fontFamily",
-                        "fontColor",
-                        "fontBackgroundColor",
-                        "|",
-                        "bold",
-                        "italic",
-                        "underline",
-                        "strikethrough",
-                        "subscript",
-                        "superscript",
-                        "code",
-                        "removeFormat",
-                        "|",
-                        "specialCharacters",
-                        "link",
-                        "insertImage",
-                        "ckbox",
-                        "mediaEmbed",
-                        "insertTable",
-                        "highlight",
-                        "blockQuote",
-                        "codeBlock",
-                        "htmlEmbed",
-                        "|",
-                        "bulletedList",
-                        "numberedList",
-                        "todoList",
-                        "outdent",
-                        "indent",
+                        'undo',
+                        'redo',
+                        '|',
+                        'sourceEditing',
+                        'showBlocks',
+                        'textPartLanguage',
+                        '|',
+                        'heading',
+                        '|',
+                        'fontSize',
+                        'fontFamily',
+                        'fontColor',
+                        'fontBackgroundColor',
+                        '|',
+                        'bold',
+                        'italic',
+                        'underline',
+                        'strikethrough',
+                        'subscript',
+                        'superscript',
+                        'code',
+                        'removeFormat',
+                        '|',
+                        'specialCharacters',
+                        'link',
+                        'insertImage',
+                        'ckbox',
+                        'mediaEmbed',
+                        'insertTable',
+                        'highlight',
+                        'blockQuote',
+                        'codeBlock',
+                        'htmlEmbed',
+                        '|',
+                        'bulletedList',
+                        'numberedList',
+                        'todoList',
+                        'outdent',
+                        'indent'
                       ],
-                      shouldNotGroupWhenFull: true,
+                      shouldNotGroupWhenFull: true
                     },
                     plugins: [
                       AccessibilityHelp,
@@ -223,62 +221,62 @@ const TextareaCustom = ({ setValue, data }: Props) => {
                       TextTransformation,
                       TodoList,
                       Underline,
-                      Undo,
+                      Undo
                     ],
                     ckbox: {
-                      tokenUrl: CKBOX_TOKEN_URL,
+                      tokenUrl: CKBOX_TOKEN_URL
                     },
                     fontFamily: {
-                      supportAllValues: true,
+                      supportAllValues: true
                     },
                     fontSize: {
-                      options: [10, 12, 14, "default", 18, 20, 22],
-                      supportAllValues: true,
+                      options: [10, 12, 14, 'default', 18, 20, 22],
+                      supportAllValues: true
                     },
                     heading: {
                       options: [
                         {
-                          model: "paragraph",
-                          title: "Paragraph",
-                          class: "ck-heading_paragraph",
+                          model: 'paragraph',
+                          title: 'Paragraph',
+                          class: 'ck-heading_paragraph'
                         },
                         {
-                          model: "heading1",
-                          view: "h1",
-                          title: "Heading 1",
-                          class: "ck-heading_heading1",
+                          model: 'heading1',
+                          view: 'h1',
+                          title: 'Heading 1',
+                          class: 'ck-heading_heading1'
                         },
                         {
-                          model: "heading2",
-                          view: "h2",
-                          title: "Heading 2",
-                          class: "ck-heading_heading2",
+                          model: 'heading2',
+                          view: 'h2',
+                          title: 'Heading 2',
+                          class: 'ck-heading_heading2'
                         },
                         {
-                          model: "heading3",
-                          view: "h3",
-                          title: "Heading 3",
-                          class: "ck-heading_heading3",
+                          model: 'heading3',
+                          view: 'h3',
+                          title: 'Heading 3',
+                          class: 'ck-heading_heading3'
                         },
                         {
-                          model: "heading4",
-                          view: "h4",
-                          title: "Heading 4",
-                          class: "ck-heading_heading4",
+                          model: 'heading4',
+                          view: 'h4',
+                          title: 'Heading 4',
+                          class: 'ck-heading_heading4'
                         },
                         {
-                          model: "heading5",
-                          view: "h5",
-                          title: "Heading 5",
-                          class: "ck-heading_heading5",
+                          model: 'heading5',
+                          view: 'h5',
+                          title: 'Heading 5',
+                          class: 'ck-heading_heading5'
                         },
                         {
-                          model: "heading6",
-                          view: "h6",
-                          title: "Heading 6",
-                          class: "ck-heading_heading6",
-                        },
-                      ],
+                          model: 'heading6',
+                          view: 'h6',
+                          title: 'Heading 6',
+                          class: 'ck-heading_heading6'
+                        }
+                      ]
                     },
                     htmlSupport: {
                       allow: [
@@ -286,53 +284,53 @@ const TextareaCustom = ({ setValue, data }: Props) => {
                           name: /^.*$/,
                           styles: true,
                           attributes: true,
-                          classes: true,
-                        },
-                      ],
+                          classes: true
+                        }
+                      ]
                     },
                     image: {
                       toolbar: [
-                        "toggleImageCaption",
-                        "imageTextAlternative",
-                        "|",
-                        "imageStyle:inline",
-                        "imageStyle:wrapText",
-                        "imageStyle:breakText",
-                        "|",
-                        "resizeImage",
-                        "|",
-                        "ckboxImageEdit",
-                      ],
+                        'toggleImageCaption',
+                        'imageTextAlternative',
+                        '|',
+                        'imageStyle:inline',
+                        'imageStyle:wrapText',
+                        'imageStyle:breakText',
+                        '|',
+                        'resizeImage',
+                        '|',
+                        'ckboxImageEdit'
+                      ]
                     },
                     link: {
                       addTargetToExternalLinks: true,
-                      defaultProtocol: "https://",
+                      defaultProtocol: 'https://',
                       decorators: {
                         toggleDownloadable: {
-                          mode: "manual",
-                          label: "Downloadable",
+                          mode: 'manual',
+                          label: 'Downloadable',
                           attributes: {
-                            download: "file",
-                          },
-                        },
-                      },
+                            download: 'file'
+                          }
+                        }
+                      }
                     },
                     list: {
                       properties: {
                         styles: true,
                         startIndex: true,
-                        reversed: true,
-                      },
+                        reversed: true
+                      }
                     },
                     table: {
                       contentToolbar: [
-                        "tableColumn",
-                        "tableRow",
-                        "mergeTableCells",
-                        "tableProperties",
-                        "tableCellProperties",
-                      ],
-                    },
+                        'tableColumn',
+                        'tableRow',
+                        'mergeTableCells',
+                        'tableProperties',
+                        'tableCellProperties'
+                      ]
+                    }
                   }}
                 />
               )}
@@ -341,7 +339,7 @@ const TextareaCustom = ({ setValue, data }: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TextareaCustom;
+export default TextareaCustom

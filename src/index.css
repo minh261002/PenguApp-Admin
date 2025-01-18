@@ -129,3 +129,15 @@
 .react-datepicker-wrapper {
   width: 100%;
 }
+
+.ck.ck-editor__main {
+  height: 350px;
+}
+
+.ck.ck-editor__editable {
+  height: 100%;
+}
+
+.react-datetime-picker__wrapper {
+  border: none !important;
+}

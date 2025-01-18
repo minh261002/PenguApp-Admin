@@ -13,7 +13,13 @@ import {
   EditPostCatalogue,
   CreatePostCatalogue,
   CreateUser,
-  EditUser
+  EditUser,
+  CategoryPage,
+  CreateCategory,
+  EditCategory,
+  ProductPage,
+  CreateProduct,
+  EditProduct
 } from '@/pages'
 
 const router = createBrowserRouter([
@@ -29,6 +35,33 @@ const router = createBrowserRouter([
         path: '/',
         element: <Dashboard />
       },
+      //product route
+      {
+        path: '/product',
+        element: <ProductPage />
+      },
+      {
+        path: '/product/create',
+        element: <CreateProduct />
+      },
+      {
+        path: '/product/:id/edit',
+        element: <EditProduct />
+      },
+      //Category route
+      {
+        path: '/category',
+        element: <CategoryPage />
+      },
+      {
+        path: '/category/create',
+        element: <CreateCategory />
+      },
+      {
+        path: '/category/:id/edit',
+        element: <EditCategory />
+      },
+      //Post Catalogue route
       {
         path: '/post-catalogue',
         element: <PostCataloguePage />
