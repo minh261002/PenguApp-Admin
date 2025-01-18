@@ -80,7 +80,7 @@ const ImageMultiple: React.FC<ImageMultipleProps> = ({ setGalleryImages, Gallery
                 className='flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50'
               >
                 <div className='flex flex-col items-center justify-center pt-5 pb-6'>
-                  <img className='mx-auto w-32' src='/images/empty.png' alt='no data' />
+                  <img className='mx-auto w-32' src='/empty.png' alt='no data' />
                   <p className='mb-2 text-sm text-gray-500'>
                     <span className='font-semibold'>Chọn ảnh từ hệ thống</span> hoặc kéo thả vào đây
                   </p>

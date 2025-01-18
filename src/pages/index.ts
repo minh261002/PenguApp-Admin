@@ -9,6 +9,9 @@ import EditPostCatalogue from '@/pages/post-catalogue/EditPostCatalogue'
 import CategoryPage from '@/pages/category/CategoryPage';
 import CreateCategory from '@/pages/category/CreateCategory';
 import EditCategory from '@/pages/category/EditCategory';
+import ProductPage from '@/pages/product/ProductPage';
+import CreateProduct from '@/pages/product/CreateProduct';
+import EditProduct from '@/pages/product/EditProduct';
 
 export {
   LoginPage,
@@ -21,5 +24,8 @@ export {
   EditPostCatalogue,
   CategoryPage,
   CreateCategory,
-  EditCategory
+  EditCategory,
+  ProductPage,
+  CreateProduct,
+  EditProduct
 }

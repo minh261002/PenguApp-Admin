@@ -16,7 +16,10 @@ import {
   EditUser,
   CategoryPage,
   CreateCategory,
-  EditCategory
+  EditCategory,
+  ProductPage,
+  CreateProduct,
+  EditProduct
 } from '@/pages'
 
 const router = createBrowserRouter([
@@ -31,6 +34,19 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Dashboard />
+      },
+      //product route
+      {
+        path: '/product',
+        element: <ProductPage />
+      },
+      {
+        path: '/product/create',
+        element: <CreateProduct />
+      },
+      {
+        path: '/product/:id/edit',
+        element: <EditProduct />
       },
       //Category route
       {
