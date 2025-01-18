@@ -6,7 +6,6 @@ export interface PostCatalogue{
   description: string;
   show_menu: boolean;
   show_home: boolean;
-  parent: string;
   status: string;
 }
 

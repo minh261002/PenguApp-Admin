@@ -62,7 +62,7 @@ export const postCatalogueColumns: ColumnDef<PostCatalogue | null>[] = [
         try {
           const response = await updateStatusPostCatalogue(_id, status)
           if (response && response.status === HttpStatus.OK) {
-            await queryClient.invalidateQueries({ queryKey: ['users'] })
+            await queryClient.invalidateQueries({ queryKey: ['postCatalogues'] })
             showToast('Cập nhật trạng thái thành công', 'success')
           }
         } catch (error) {
