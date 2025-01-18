@@ -18,7 +18,7 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const { login } = useAuthStore()
+  const { login, setUserData } = useAuthStore()
   const navigate = useNavigate()
 
   const {
@@ -31,10 +31,15 @@ const LoginPage = () => {
     try {
       setLoading(true)
       const response = await loginHandle(payload)
+      if (response.userData.role !== 'admin') {
+        showToast('Bạn không có quyền truy cập nội dung này', 'error')
+        return
+      }
 
       if (response.status === HttpStatus.OK) {
         showToast(response.message, 'success')
         login({ accessToken: response.tokens.accessToken, refreshToken: response.tokens.refreshToken })
+        setUserData(response.userData)
         navigate('/')
       } else {
         showToast(response.message, 'error')

@@ -31,73 +31,75 @@ const Navbar = () => {
 
   return (
     <header className='shadow dark:shadow-2xl border-b-2'>
-      <div className='h-[64px] w-full grid grid-cols-2 md:grid-cols-3 items-center justify-between px-10'>
-        <div className='col-span-1'>
-          <div className='relative hidden md:block'>
-            <Input className='md:block w-full' placeholder='Tìm kiếm nội dung' />
-            <Button className='absolute top-1/2 right-0 transform -translate-y-1/2' size={'icon'}>
-              <SearchIcon size={24} />
-            </Button>
-          </div>
+      <div className='h-[64px] w-full px-10 flex flex-col items-center justify-center'>
+        <div className='container grid grid-cols-2 md:grid-cols-3 items-center justify-between '>
+          <div className='col-span-1'>
+            <div className='relative hidden md:block'>
+              <Input className='md:block w-full' placeholder='Tìm kiếm nội dung' />
+              <Button className='absolute top-1/2 right-0 transform -translate-y-1/2' size={'icon'}>
+                <SearchIcon size={24} />
+              </Button>
+            </div>
 
-          <div className='block md:hidden'>
-            <div className='cursor-pointer'>
-              <MenuIcon />
+            <div className='block md:hidden'>
+              <div className='cursor-pointer'>
+                <MenuIcon />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className='col-span-1 hidden md:block'></div>
+          <div className='col-span-1 hidden md:block'></div>
 
-        <div className='col-span-1 flex items-center justify-end gap-6'>
-          <DropdownMenu>
-            <DropdownMenuTrigger className='focus:outline-none'>
-              {isAuthenticated && user ? (
-                <div className='flex items-center gap-2 cursor-pointer'>
-                  <Avatar>
-                    <AvatarImage src={user?.avatar || ''} alt={user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
+          <div className='col-span-1 flex items-center justify-end gap-6'>
+            <DropdownMenu>
+              <DropdownMenuTrigger className='focus:outline-none'>
+                {isAuthenticated && user ? (
+                  <div className='flex items-center gap-2 cursor-pointer'>
+                    <Avatar>
+                      <AvatarImage src={user?.avatar || ''} alt={user.name} />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
 
-                  <div className='hidden md:flex flex-col items-start'>
-                    <span className='text-md font-medium'>{user.name}</span>
-                    <span className='block text-xs text-muted-foreground'>Administrator</span>
+                    <div className='hidden md:flex flex-col items-start'>
+                      <span className='text-md font-medium'>{user.name}</span>
+                      <span className='block text-xs text-muted-foreground'>Administrator</span>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <Button className='text-sm font-medium'>Đăng nhập</Button>
-              )}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <UserIcon size={24} />
-                Thông tin cá nhân
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <LockIcon />
-                Đổi mật khẩu
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Button className='text-sm font-medium' size={'sm'} onClick={handleLogout}>
-                  <LogOutIcon size={24} />
-                  Đăng xuất
-                </Button>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+                ) : (
+                  <Button className='text-sm font-medium'>Đăng nhập</Button>
+                )}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>Tài khoản</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <UserIcon size={24} />
+                  Thông tin cá nhân
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <LockIcon />
+                  Đổi mật khẩu
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Button className='text-sm font-medium' size={'sm'} onClick={handleLogout}>
+                    <LogOutIcon size={24} />
+                    Đăng xuất
+                  </Button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
 
-          <div className='cursor-pointer' onClick={handleFullscreen}>
-            <FullscreenIcon size={28} />
-          </div>
+            <div className='cursor-pointer' onClick={handleFullscreen}>
+              <FullscreenIcon size={28} />
+            </div>
 
-          <div className='cursor-pointer relative'>
-            <BellIcon size={28} />
-            <span className='absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-medium'>
-              0
-            </span>
+            <div className='cursor-pointer relative'>
+              <BellIcon size={28} />
+              <span className='absolute -top-2 -right-2 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center text-white text-xs font-medium'>
+                0
+              </span>
+            </div>
           </div>
         </div>
       </div>

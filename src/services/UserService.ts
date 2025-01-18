@@ -1,6 +1,6 @@
 import axiosInstance from "../configs/axios";
 import { handleAxiosError } from "@/helpers/axiosHelper";
-import type { User } from "@/types/User";
+import type { User, UserResponse } from "@/types/User";
 import { showToast } from "@/helpers/toastHelper";
 import type { Response } from "@/types/Default";
 
@@ -13,10 +13,10 @@ const getAllUsers = async (): Promise<User[]> => {
   }
 }
 
-const getUserById = async (id: number): Promise<User | null> => {
+const getUserById = async (_id: string): Promise<UserResponse | null> => {
   try {
-    const response = await axiosInstance.get(`/user/${id}`);
-    return response.data.data;
+    const response = await axiosInstance.get(`/user/${_id}`);
+    return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
     return null;
@@ -26,6 +26,19 @@ const getUserById = async (id: number): Promise<User | null> => {
 const createUser = async (data: User): Promise<Response | null> => {
   try {
     const response = await axiosInstance.post("/user", data);
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, showToast);
+    return null;
+  }
+}
+
+const updateUser = async (
+  _id: string,
+  data: User
+): Promise<Response | null> => {
+  try {
+    const response = await axiosInstance.put(`/user/${_id}`, data);
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
@@ -49,9 +62,9 @@ const updateStatusUser= async (
   }
 };
 
-const deleteUser = async (id: number): Promise<Response | null> => {
+const deleteUser = async (_id: string): Promise<Response | null> => {
   try {
-    const response = await axiosInstance.delete(`/user/${id}`);
+    const response = await axiosInstance.delete(`/user/${_id}`);
     return response.data;
   } catch (error) {
     handleAxiosError(error, showToast);
@@ -65,4 +78,5 @@ export {
   deleteUser,
   getUserById,
   createUser,
+  updateUser,
 }

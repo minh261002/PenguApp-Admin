@@ -2,7 +2,7 @@ import useDocumentTitle from '@/hooks/useDocumentTItle'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import type { User } from '@/types/User'
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import DatePickerCustom from '@/components/custom/DatePickerCustom'
 import { useEffect, useState } from 'react'
 import SelectLocation from '@/components/custom/SelectLocation'
@@ -10,17 +10,16 @@ import { getDistricts, getProvinces, getWards } from '@/services/LocationService
 import type { Location } from '@/types/Location'
 import ReturnGroup from '@/components/custom/ReturnGroup'
 import { EyeIcon, EyeClosedIcon } from 'lucide-react'
-import { createUser } from '@/services/UserService'
+import { getUserById, updateUser } from '@/services/UserService'
 import LoadingPage from '@/layouts/LoadingPage'
 import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
-import { useNavigate } from 'react-router-dom'
 import ImageCustom from '@/components/custom/ImageCustom'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { UserRole } from '@/constants/enum'
+import { useParams } from 'react-router-dom'
 
-const CreateUser = () => {
-  useDocumentTitle('Thêm tài khoản mới')
+const EditUser = () => {
+  useDocumentTitle('Chỉnh sửa thông tin')
+  const { id } = useParams()
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [provinces, setProvinces] = useState<Location[]>([])
@@ -30,11 +29,11 @@ const CreateUser = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [createFile, setCreateFile] = useState<string | null>(null)
-  const nav = useNavigate()
 
   const {
     register,
     handleSubmit,
+    setValue,
     control,
     formState: { errors }
   } = useForm<User>()
@@ -54,22 +53,54 @@ const CreateUser = () => {
     setWards(response || [])
   }
 
+  const fetchUserData = async () => {
+    const response = await getUserById(String(id))
+    console.log(response?.data.province_id, response?.data.district_id, response?.data.ward_id)
+    if (response && Number(response.status) === HttpStatus.OK) {
+      if (response.data) {
+        setValue('name', response.data.name)
+        setValue('email', response.data.email)
+        setValue('phone', response.data.phone)
+        setValue('avatar', response.data.avatar)
+
+        setValue('province_id', response.data.province_id)
+
+        const district = await getDistricts(response?.data.province_id)
+        setDistricts(district || [])
+        setValue('district_id', response?.data.district_id)
+
+        const ward = await getWards(response?.data.district_id)
+        setWards(ward || [])
+        setValue('ward_id', response?.data.ward_id)
+
+        setValue('address', response.data.address)
+        setValue('role', response.data.role)
+        setValue('status', response.data.status)
+
+        setValue('reward_point', response.data.reward_point)
+        setSelectedDate(response.data.birthday)
+        setCreateFile(response.data.avatar)
+      }
+    }
+  }
+
   useEffect(() => {
     fetchProvinces()
+    fetchUserData()
   }, [])
 
-  const handleCreateUser = async (data: User) => {
+  const handleUpdateUser = async (data: User) => {
     if (selectedDate) {
       data.birthday = selectedDate
     }
+
     data.avatar = createFile as string
 
     try {
       setLoading(true)
-      const response = await createUser(data)
+      const response = await updateUser(String(id), data)
       if (response && response.status === HttpStatus.OK) {
         showToast(response.message, 'success')
-        nav('/user')
       }
     } catch (error) {
       console.log('Create user failed')
@@ -78,7 +109,7 @@ const CreateUser = () => {
     }
   }
   return (
-    <form className='grid grid-cols-1 md:grid-cols-4 md:gap-5' onSubmit={handleSubmit(handleCreateUser)}>
+    <form className='grid grid-cols-1 md:grid-cols-4 md:gap-5' onSubmit={handleSubmit(handleUpdateUser)}>
       {loading ? <LoadingPage /> : null}
       <div className='col-span-3'>
         <Card className='mt-5'>
@@ -133,7 +164,7 @@ const CreateUser = () => {
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder='Nhập mật khẩu'
-                      {...register('password', { required: 'Mật khẩu không được để trống' })}
+                      {...register('password')}
                     />
                     <button
                       type='button'
@@ -179,34 +210,7 @@ const CreateUser = () => {
       </div>
 
       <div className='col-span-1'>
-        <ReturnGroup link='/user' type='create' />
-
-        <Card className='mt-5'>
-          <CardHeader className='flex-row items-center justify-between border-b mb-5'>
-            <CardTitle className='font-medium'>Vai trò</CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            <Controller
-              name='role'
-              control={control}
-              defaultValue=''
-              rules={{ required: 'Vui lòng chọn vai trò' }}
-              render={({ field }) => (
-                <Select onValueChange={(value) => field.onChange(value)} value={field.value}>
-                  <SelectTrigger>
-                    <SelectValue placeholder='Chọn vai trò' />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value={UserRole.ADMIN}>Quản trị viên</SelectItem>
-                    <SelectItem value={UserRole.USER}>Người dùng</SelectItem>
-                  </SelectContent>
-                </Select>
-              )}
-            />
-            {errors.status && <span className='text-red-500 text-sm'>{errors.status.message}</span>}
-          </CardContent>
-        </Card>
+        <ReturnGroup link='/user' type='edit' />
 
         <Card className='mt-5'>
           <CardHeader className='flex-row items-center justify-between border-b mb-5'>
@@ -227,4 +231,4 @@ const CreateUser = () => {
   )
 }
 
-export default CreateUser
+export default EditUser

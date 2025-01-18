@@ -7,7 +7,7 @@ export interface User{
   district_id: string;
   ward_id: string;
   address: string;
-  avatar: string;
+  avatar: string | null;
   reward_point: number;
   role: string;
   status: string;
@@ -15,3 +15,9 @@ export interface User{
   password: string | null;
 }
 
+
+export interface UserResponse {
+  data: User;
+  status: number;
+  message: string;
+}

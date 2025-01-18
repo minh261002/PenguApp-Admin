@@ -5,8 +5,16 @@ import GuardLayout from '@/layouts/GuardLayout'
 import Auththentication from '@/middlewares/Authentication'
 import NoAuthentication from '@/middlewares/NoAuthentication'
 import { NotFoundError, UnauthorisedError } from './pages/errors'
-import { Dashboard, LoginPage, UserPage } from './pages'
-import CreateUser from './pages/user/CreateUser'
+import {
+  Dashboard,
+  LoginPage,
+  PostCataloguePage,
+  UserPage,
+  EditPostCatalogue,
+  CreatePostCatalogue,
+  CreateUser,
+  EditUser
+} from '@/pages'
 
 const router = createBrowserRouter([
   {
@@ -21,6 +29,18 @@ const router = createBrowserRouter([
         path: '/',
         element: <Dashboard />
       },
+      {
+        path: '/post-catalogue',
+        element: <PostCataloguePage />
+      },
+      {
+        path: '/post-catalogue/create',
+        element: <CreatePostCatalogue />
+      },
+      {
+        path: '/post-catalogue/:id/edit',
+        element: <EditPostCatalogue />
+      },
       //User route
       {
         path: '/user',
@@ -29,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: '/user/create',
         element: <CreateUser />
+      },
+      {
+        path: '/user/:id/edit',
+        element: <EditUser />
       }
     ]
   },

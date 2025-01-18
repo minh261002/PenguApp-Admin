@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios'
 import useAuthStore from '@/store/authStore'
 
-export const baseURL = 'http://localhost:3000/api'
+export const baseURL = import.meta.env.VITE_API_URL as string
 
 interface CustomAxiosRequestConfig extends AxiosRequestConfig {
   _retry?: boolean
