@@ -22,13 +22,15 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { PlusIcon } from 'lucide-react'
+import type { ProductVariation } from '@/types/Product'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const CreateProduct = () => {
   useDocumentTitle('Thêm sản phẩm mới')
@@ -38,6 +40,35 @@ const CreateProduct = () => {
   const [gallery, setGallery] = useState<string[]>([])
   const [categories, setCategories] = useState<Category[]>([])
   const [description, setDescription] = useState<string>('')
+  const [open, setOpen] = useState<boolean>(false)
+  const [variations, setVariations] = useState<ProductVariation[]>([])
+  const [formVariation, setFormVariation] = useState<ProductVariation>({
+    size: '',
+    color: '',
+    price: 0,
+    sale_price: 0,
+    stock: 0
+  })
+
+  const handleChangeVariation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormVariation({
+      ...formVariation,
+      [name]: name === 'price' || name === 'discountPrice' || name === 'quantity' ? parseFloat(value) : value
+    })
+  }
+
+  const handleSaveVariation = () => {
+    setVariations([...variations, formVariation])
+    setFormVariation({
+      size: '',
+      color: '',
+      price: 0,
+      sale_price: 0,
+      stock: 0
+    })
+    setOpen(false)
+  }
 
   const nav = useNavigate()
 
@@ -118,27 +149,152 @@ const CreateProduct = () => {
         <Card className='mt-5'>
           <CardHeader className='flex-row items-center justify-between border-b mb-5'>
             <CardTitle className='font-medium'>Chi tiết sản phẩm</CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            <AlertDialog>
+            <AlertDialog open={open}>
               <AlertDialogTrigger asChild>
-                <Button variant='outline'>Show Dialog</Button>
+                <Button variant='outline' onClick={() => setOpen(true)}>
+                  <PlusIcon size={16} />
+                </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className='max-w-2xl'>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account and remove your data from
-                    our servers.
-                  </AlertDialogDescription>
+                  <AlertDialogTitle className='pb-2 mb-2 border-b border-gray-200 font-medium text-lg'>
+                    Thông tin chi tiết của sản phẩm
+                  </AlertDialogTitle>
+                  <div className='my-3'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                      <div className='form-group mb-3'>
+                        <label className='text-sm font-medium mb-1 block'>Kích thước</label>
+                        <Input
+                          type='text'
+                          name='size'
+                          value={formVariation.size}
+                          onChange={handleChangeVariation}
+                          placeholder='Nhập kích thước'
+                        />
+                      </div>
+                      <div className='form-group mb-3'>
+                        <label className='text-sm font-medium mb-1 block'>Màu sắc</label>
+                        <Input
+                          type='text'
+                          name='color'
+                          value={formVariation.color}
+                          onChange={handleChangeVariation}
+                          placeholder='Nhập màu sắc'
+                        />
+                      </div>
+                      <div className='form-group mb-3'>
+                        <label className='text-sm font-medium mb-1 block'>Giá</label>
+                        <Input
+                          type='number'
+                          name='price'
+                          value={formVariation.price}
+                          onChange={handleChangeVariation}
+                          placeholder='Nhập giá'
+                        />
+                      </div>
+                      <div className='form-group mb-3'>
+                        <label className='text-sm font-medium mb-1 block'>Giá khuyến mãi</label>
+                        <Input
+                          type='number'
+                          name='sale_price'
+                          value={formVariation.sale_price}
+                          onChange={handleChangeVariation}
+                          placeholder='Nhập giá khuyến mãi'
+                        />
+                      </div>
+                      <div className='form-group mb-3'>
+                        <label className='text-sm font-medium mb-1 block'>Số lượng</label>
+                        <Input
+                          type='number'
+                          name='stock'
+                          value={formVariation.stock}
+                          onChange={handleChangeVariation}
+                          placeholder='Nhập số lượng'
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction>Continue</AlertDialogAction>
+                  <AlertDialogCancel onClick={() => setOpen(false)}>Huỷ</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleSaveVariation}>Lưu thông tin</AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+          </CardHeader>
+
+          <CardContent>
+            {variations.length > 0 ? (
+              <>
+                {variations.map((variation, index) => (
+                  <Accordion type='single' collapsible className='w-full' key={index}>
+                    <AccordionItem value={`item-${index}`}>
+                      <AccordionTrigger className='cursor-pointer'>
+                        <p className='text-gray-700'>
+                          Size: {variation.size} - Màu: {variation.color}
+                        </p>
+                      </AccordionTrigger>
+                      <AccordionContent>
+                        <div className='grid grid-cols-1 md:grid-cols-2 gap-4 p-10'>
+                          <div className='form-group mb-3'>
+                            <label className='text-sm font-medium mb-1 block'>Kích thước</label>
+                            <Input
+                              type='text'
+                              name='size'
+                              value={variation.size}
+                              onChange={handleChangeVariation}
+                              placeholder='Nhập kích thước'
+                            />
+                          </div>
+                          <div className='form-group mb-3'>
+                            <label className='text-sm font-medium mb-1 block'>Màu sắc</label>
+                            <Input
+                              type='text'
+                              name='color'
+                              value={variation.color}
+                              onChange={handleChangeVariation}
+                              placeholder='Nhập màu sắc'
+                            />
+                          </div>
+                          <div className='form-group mb-3'>
+                            <label className='text-sm font-medium mb-1 block'>Giá</label>
+                            <Input
+                              type='number'
+                              name='price'
+                              value={variation.price}
+                              onChange={handleChangeVariation}
+                              placeholder='Nhập giá'
+                            />
+                          </div>
+                          <div className='form-group mb-3'>
+                            <label className='text-sm font-medium mb-1 block'>Giá khuyến mãi</label>
+                            <Input
+                              type='number'
+                              name='sale_price'
+                              value={variation.sale_price}
+                              onChange={handleChangeVariation}
+                              placeholder='Nhập giá khuyến mãi'
+                            />
+                          </div>
+                          <div className='form-group mb-3'>
+                            <label className='text-sm font-medium mb-1 block'>Số lượng</label>
+                            <Input
+                              type='number'
+                              name='stock'
+                              value={variation.stock}
+                              onChange={handleChangeVariation}
+                              placeholder='Nhập số lượng'
+                            />
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </Accordion>
+                ))}
+              </>
+            ) : (
+              <p className='text-gray-500'>Chưa có biến thể nào.</p>
+            )}
           </CardContent>
         </Card>
 

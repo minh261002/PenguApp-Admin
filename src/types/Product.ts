@@ -8,19 +8,16 @@ export interface Product {
   gallery: string[];
   description: string;
   category_id: string;
-  variants: ProductVariant[];
+  variations: ProductVariation[];
   status: string;
 }
 
-interface ProductVariant {
-  _id: string;
-  name: string;
+export interface ProductVariation {
   size: string;
   color: string;
   price: number;
   sale_price: number;
   stock: number;
-  status: string;
 }
 
 export interface ProductResponse

@@ -11,7 +11,7 @@ interface AuthStore {
   setUserData: (userData: UserData) => void
   logout: () => void
   checkAuth: () => boolean
-  refreshAccessToken: (newAccessToken: string, newRefreshToken: string) => void // Cập nhật refreshToken
+  refreshAccessToken: (newAccessToken: string, newRefreshToken: string) => void 
 }
 
 const useAuthStore = create<AuthStore>()(
