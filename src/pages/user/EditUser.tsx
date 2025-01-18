@@ -10,12 +10,11 @@ import { getDistricts, getProvinces, getWards } from '@/services/LocationService
 import type { Location } from '@/types/Location'
 import ReturnGroup from '@/components/custom/ReturnGroup'
 import { EyeIcon, EyeClosedIcon } from 'lucide-react'
-import { createUser, getUserById } from '@/services/UserService'
+import { getUserById, updateUser } from '@/services/UserService'
 import LoadingPage from '@/layouts/LoadingPage'
 import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
-import { useNavigate } from 'react-router-dom'
-import FileCustom from '@/components/custom/FileCustom'
+import ImageCustom from '@/components/custom/ImageCustom'
 import { useParams } from 'react-router-dom'
 
 const EditUser = () => {
@@ -29,10 +28,8 @@ const EditUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [avatar, setAvatar] = useState<File[]>([])
+  const [file, setFile] = useState<File | undefined>(undefined)
   const [imageUrl, setImageUrl] = useState<string | null>(null)
-
-  const nav = useNavigate()
 
   const {
     register,
@@ -59,17 +56,28 @@ const EditUser = () => {
 
   const fetchUserData = async () => {
     const response = await getUserById(String(id))
+    console.log(response?.data.province_id, response?.data.district_id, response?.data.ward_id)
     if (response && Number(response.status) === HttpStatus.OK) {
       if (response.data) {
         setValue('name', response.data.name)
         setValue('email', response.data.email)
         setValue('phone', response.data.phone)
-        // setValue('province_id', response.data.province_id)
-        // setValue('district_id', response.data.district_id)
-        // setValue('ward_id', response.data.ward_id)
+        setValue('avatar', response.data.avatar)
+
+        setValue('province_id', response.data.province_id)
+
+        const district = await getDistricts(response?.data.province_id)
+        setDistricts(district || [])
+        setValue('district_id', response?.data.district_id)
+
+        const ward = await getWards(response?.data.district_id)
+        setWards(ward || [])
+        setValue('ward_id', response?.data.ward_id)
+
         setValue('address', response.data.address)
         setValue('role', response.data.role)
         setValue('status', response.data.status)
+
         setValue('reward_point', response.data.reward_point)
         setSelectedDate(response.data.birthday)
         setImageUrl(response.data.avatar)
@@ -82,21 +90,20 @@ const EditUser = () => {
     fetchUserData()
   }, [])
 
-  const handleCreateUser = async (data: User) => {
+  const handleUpdateUser = async (data: User) => {
     if (selectedDate) {
       data.birthday = selectedDate
     }
 
-    if (avatar.length > 0) {
-      data.file = avatar[0]
+    if (file) {
+      data.file = file
     }
 
     try {
       setLoading(true)
-      const response = await createUser(data)
+      const response = await updateUser(String(id), data)
       if (response && response.status === HttpStatus.OK) {
         showToast(response.message, 'success')
-        nav('/user')
       }
     } catch (error) {
       console.log('Create user failed')
@@ -105,7 +112,7 @@ const EditUser = () => {
     }
   }
   return (
-    <form className='grid grid-cols-1 md:grid-cols-4 md:gap-5' onSubmit={handleSubmit(handleCreateUser)}>
+    <form className='grid grid-cols-1 md:grid-cols-4 md:gap-5' onSubmit={handleSubmit(handleUpdateUser)}>
       {loading ? <LoadingPage /> : null}
       <div className='col-span-3'>
         <Card className='mt-5'>
@@ -160,7 +167,7 @@ const EditUser = () => {
                     <Input
                       type={showPassword ? 'text' : 'password'}
                       placeholder='Nhập mật khẩu'
-                      {...register('password', { required: 'Mật khẩu không được để trống' })}
+                      {...register('password')}
                     />
                     <button
                       type='button'
@@ -214,7 +221,12 @@ const EditUser = () => {
           </CardHeader>
 
           <CardContent className=''>
-            <FileCustom files={avatar} setFiles={setAvatar} multiple={true} url={imageUrl ?? ''} />
+            <ImageCustom
+              image={imageUrl}
+              setCreateFile={(file) => {
+                setFile(file)
+              }}
+            />
           </CardContent>
         </Card>
       </div>

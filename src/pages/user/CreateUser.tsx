@@ -15,7 +15,7 @@ import LoadingPage from '@/layouts/LoadingPage'
 import { HttpStatus } from '@/constants/httpStatus'
 import { showToast } from '@/helpers/toastHelper'
 import { useNavigate } from 'react-router-dom'
-import FileCustom from '@/components/custom/FileCustom'
+import ImageCustom from '@/components/custom/ImageCustom'
 
 const CreateUser = () => {
   useDocumentTitle('Thêm tài khoản mới')
@@ -27,8 +27,7 @@ const CreateUser = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [avatar, setAvatar] = useState<File[]>([])
-
+  const [createFile, setCreateFile] = useState<string | null>(null)
   const nav = useNavigate()
 
   const {
@@ -61,7 +60,7 @@ const CreateUser = () => {
     if (selectedDate) {
       data.birthday = selectedDate
     }
-    data.file = avatar[0]
+    data.avatar = createFile as string
 
     try {
       setLoading(true)
@@ -186,7 +185,12 @@ const CreateUser = () => {
           </CardHeader>
 
           <CardContent className=''>
-            <FileCustom files={avatar} setFiles={setAvatar} multiple={true} />
+            <ImageCustom
+              setCreateFile={(url: string) => {
+                setCreateFile(url as string)
+              }}
+              image={createFile as string}
+            />
           </CardContent>
         </Card>
       </div>

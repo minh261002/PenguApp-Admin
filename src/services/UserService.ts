@@ -37,6 +37,23 @@ const createUser = async (data: User): Promise<Response | null> => {
   }
 }
 
+const updateUser = async (
+  _id: string,
+  data: User
+): Promise<Response | null> => {
+  try {
+    const response = await axiosInstance.put(`/user/${_id}`, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    handleAxiosError(error, showToast);
+    return null;
+  }
+}
+
 const updateStatusUser= async (
   _id: string,
   status: string
@@ -69,4 +86,5 @@ export {
   deleteUser,
   getUserById,
   createUser,
+  updateUser,
 }
